@@ -3,11 +3,11 @@
 #ifndef MODULE_HSOLVER_MATH_KERNEL_H
 #define MODULE_HSOLVER_MATH_KERNEL_H
 
-#include <module_base/macros.h>
+// #include <module_base/macros.h>
 
-#include "module_base/blas_connector.h"
-#include "module_base/parallel_reduce.h"
-#include "module_psi/psi.h"
+#include "../../module_base/blas_connector.h"
+#include "../../module_base/parallel_reduce.h"
+// #include "module_psi/psi.h"
 
 #if defined(__CUDA) || defined(__UT_USE_CUDA)
 #include <cuda_runtime.h>
