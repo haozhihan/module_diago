@@ -1,0 +1,6 @@
+/root/py/build/CMakeFiles/example.dir
+/root/py/build/CMakeFiles/example_module.dir
+/root/py/build/CMakeFiles/edit_cache.dir
+/root/py/build/CMakeFiles/rebuild_cache.dir
+/root/py/build/pybind11/CMakeFiles/edit_cache.dir
+/root/py/build/pybind11/CMakeFiles/rebuild_cache.dir

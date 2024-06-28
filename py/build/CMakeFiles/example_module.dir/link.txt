@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -flto -shared  -o example_module.cpython-310-x86_64-linux-gnu.so CMakeFiles/example_module.dir/bindings.cpp.o  -Wl,-rpath,/root/py/build libexample.so 
