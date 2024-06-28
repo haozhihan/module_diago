@@ -2,6 +2,9 @@
 #define DIAGO_NEW_DAV_H
 
 #include "diagh.h"
+#include "module_base/module_device/types.h"
+#include "module_base/module_device/device.h"
+#include "module_base/module_device/memory_op.h"
 
 #include <functional>
 
@@ -147,7 +150,7 @@ class Diago_DavSubspace : public DiagH<T, Device>
     using syncmem_h2d_op = base_device::memory::synchronize_memory_op<T, Device, base_device::DEVICE_CPU>;
     using syncmem_d2h_op = base_device::memory::synchronize_memory_op<T, base_device::DEVICE_CPU, Device>;
 
-    using hpsi_info = typename hamilt::Operator<T, Device>::hpsi_info;
+    // using hpsi_info = typename hamilt::Operator<T, Device>::hpsi_info;
 
     consts<T> cs;
     const T *one = nullptr, *zero = nullptr, *neg_one = nullptr;

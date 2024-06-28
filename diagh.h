@@ -8,6 +8,8 @@
 // #include "module_hamilt_general/hamilt.h"
 // #include "module_psi/psi.h"
 
+#include "module_base/module_device/types.h"
+
 #ifdef __MPI
 #include "mpi.h"
 #endif
@@ -49,9 +51,9 @@ class DiagH
     // virtual void init()=0;
     std::string method = "none";
 
-    virtual void diag(hamilt::Hamilt<T, Device> *phm_in, psi::Psi<T, Device> &psi, Real *eigenvalue_in) {
-      ModuleBase::WARNING_QUIT("diagh", "diag method not implemented for the base class!");
-    };
+    // virtual void diag(hamilt::Hamilt<T, Device> *phm_in, psi::Psi<T, Device> &psi, Real *eigenvalue_in) {
+    //   ModuleBase::WARNING_QUIT("diagh", "diag method not implemented for the base class!");
+    // };
 
 };
 
