@@ -30,7 +30,7 @@ class Diago_DavSubspace : public DiagH<T, Device>
                       const bool& need_subspace_in,
                       const diag_comm_info& diag_comm_in);
 
-    virtual ~Diago_DavSubspace() override;
+    ~Diago_DavSubspace();
 
     using HPsiFunc = std::function<void(T*, T*, const int, const int, const int, const int)>;
     using SubspaceFunc = std::function<void(T*, T*, Real*, const int, const int)>;

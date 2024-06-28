@@ -877,12 +877,12 @@ template class Diago_DavSubspace<std::complex<float>, base_device::DEVICE_GPU>;
 template class Diago_DavSubspace<std::complex<double>, base_device::DEVICE_GPU>;
 #endif
 
-#ifdef __LCAO
+// #ifdef __LCAO
 template class Diago_DavSubspace<double, base_device::DEVICE_CPU>;
 
 #if ((defined __CUDA) || (defined __ROCM))
 template class Diago_DavSubspace<double, base_device::DEVICE_GPU>;
 #endif
 
-#endif
+// #endif
 } // namespace hsolver
