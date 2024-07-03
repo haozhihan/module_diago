@@ -1,7 +1,7 @@
 #include "memory_op.h"
 
-#include "module_base/memory.h"
-#include "module_base/tool_threading.h"
+#include "../memory.h"
+#include "../tool_threading.h"
 
 #include <complex>
 #include <iostream>

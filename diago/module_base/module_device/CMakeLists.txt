@@ -1,44 +1,14 @@
-# list(APPEND module_device_srcs
-#   memory_op.cpp
-#   device.cpp
-# )
+# 添加包含目录
+include_directories(${CMAKE_SOURCE_DIR}/diago/module_base/module_device)
 
-# if(USE_CUDA)
-#   list(APPEND module_device_srcs
-#     cuda/memory_op.cu
-#   )
-# endif()
+# 设置源文件列表
+set(DEVICE_SOURCES
+    device.cpp
+    memory_op.cpp
+)
 
+# 添加库
+add_library(device ${DEVICE_SOURCES})
 
-# if(USE_ROCM)
-#   hip_add_library(module_device_rocm STATIC
-#     rocm/memory_op.hip.cu
-#   )
-#   target_link_libraries(
-#     device 
-#     module_device_rocm 
-#     hip::host
-#     hip::device
-#     hip::hipfft
-#     roc::hipblas
-#     roc::hipsolver
-#   )
-# endif()
-
-# add_library(device OBJECT ${device_srcs})
-
-# if(USE_CUDA)
-#   target_link_libraries(
-#     device 
-#   )
-# elseif(USE_ROCM)
-#   target_link_libraries(
-#     device 
-#     device_rocm 
-#     hip::host
-#     hip::device
-#     hip::hipfft
-#     roc::hipblas
-#     roc::hipsolver
-#   )
-# endif()
+# 链接库
+target_link_libraries(device)
