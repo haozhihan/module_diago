@@ -1,6 +1,6 @@
 #include "memory_op.h"
 
-#include "../memory.h"
+// #include "../memory.h"
 #include "../tool_threading.h"
 
 #include <complex>
@@ -34,7 +34,7 @@ struct resize_memory_op<FPTYPE, base_device::DEVICE_CPU>
 
         if (record_string != "no_record")
         {
-            ModuleBase::Memory::record(record_string, sizeof(FPTYPE) * size);
+            // ModuleBase::Memory::record(record_string, sizeof(FPTYPE) * size);
         }
     }
 };

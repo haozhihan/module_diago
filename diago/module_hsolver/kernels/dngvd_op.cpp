@@ -1,6 +1,9 @@
 #include "module_hsolver/kernels/dngvd_op.h"
 
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+
 
 namespace hsolver
 {
@@ -24,35 +27,35 @@ struct dngvd_op<T, base_device::DEVICE_CPU>
         int info = 0;
         int lwork = 2 * nstart + nstart * nstart;
         T* work = new T[lwork];
-        ModuleBase::GlobalFunc::ZEROS(work, lwork);
+        Parallel_Reduce::ZEROS(work, lwork);
 
         int lrwork = 1 + 5 * nstart + 2 * nstart * nstart;
         Real* rwork = new Real[lrwork];
-        ModuleBase::GlobalFunc::ZEROS(rwork, lrwork);
+        Parallel_Reduce::ZEROS(rwork, lrwork);
 
         int liwork = 3 + 5 * nstart;
         int* iwork = new int[liwork];
-        ModuleBase::GlobalFunc::ZEROS(iwork, liwork);
+        Parallel_Reduce::ZEROS(iwork, liwork);
 
         //===========================
         // calculate all eigenvalues
         //===========================
-        LapackConnector::xhegvd(1,
-                                'V',
-                                'U',
-                                nstart,
-                                vcc,
-                                ldh,
-                                scc,
-                                ldh,
-                                eigenvalue,
-                                work,
-                                lwork,
-                                rwork,
-                                lrwork,
-                                iwork,
-                                liwork,
-                                info);
+        LapackCon::xhegvd(1,
+                          'V',
+                          'U',
+                          nstart,
+                          vcc,
+                          ldh,
+                          scc,
+                          ldh,
+                          eigenvalue,
+                          work,
+                          lwork,
+                          rwork,
+                          lrwork,
+                          iwork,
+                          liwork,
+                          info);
 
         if (info != 0)
         {
@@ -101,16 +104,16 @@ struct dngv_op<T, base_device::DEVICE_CPU>
 
         int lwork = 2 * nbase - 1;
         T* work = new T[lwork];
-        ModuleBase::GlobalFunc::ZEROS(work, lwork);
+        Parallel_Reduce::ZEROS(work, lwork);
 
         int lrwork = 3 * nbase - 2;
         Real* rwork = new Real[lrwork];
-        ModuleBase::GlobalFunc::ZEROS(rwork, lrwork);
+        Parallel_Reduce::ZEROS(rwork, lrwork);
 
         //===========================
         // calculate all eigenvalues
         //===========================
-        LapackConnector::xhegv(1, 'V', 'U', nbase, vcc, ldh, scc, ldh, eigenvalue, work, lwork, rwork, info);
+        LapackCon::xhegv(1, 'V', 'U', nbase, vcc, ldh, scc, ldh, eigenvalue, work, lwork, rwork, info);
 
         if (info != 0)
         {
@@ -164,7 +167,7 @@ struct dnevx_op<T, base_device::DEVICE_CPU>
 
         // When lwork = -1, the demension of work will be assumed
         // Assume the denmension of work by output work[0]
-        LapackConnector::xheevx(
+        LapackCon::xheevx(
             1,          // ITYPE = 1:  A*x = (lambda)*B*x
             'V',        // JOBZ = 'V':  Compute eigenvalues and eigenvectors.
             'I',        // RANGE = 'I': the IL-th through IU-th eigenvalues will be found.
@@ -198,7 +201,7 @@ struct dnevx_op<T, base_device::DEVICE_CPU>
         // V is the output of the function, the storage space is also (nstart * ldh), and the data size of valid V
         // obtained by the zhegvx operation is (nstart * nstart) and stored in zux (internal to the function). When
         // the function is output, the data of zux will be mapped to the corresponding position of V.
-        LapackConnector::xheevx(
+        LapackCon::xheevx(
             1,          // ITYPE = 1:  A*x = (lambda)*B*x
             'V',        // JOBZ = 'V':  Compute eigenvalues and eigenvectors.
             'I',        // RANGE = 'I': the IL-th through IU-th eigenvalues will be found.
@@ -257,7 +260,7 @@ struct dngvx_op<T, base_device::DEVICE_CPU>
         int* iwork = new int[5 * nbase];
         int* ifail = new int[nbase];
 
-        LapackConnector::xhegvx(
+        LapackCon::xhegvx(
             1,     // ITYPE = 1:  A*x = (lambda)*B*x
             'V',   // JOBZ = 'V':  Compute eigenvalues and eigenvectors.
             'I',   // RANGE = 'I': the IL-th through IU-th eigenvalues will be found.
@@ -287,30 +290,30 @@ struct dngvx_op<T, base_device::DEVICE_CPU>
         delete[] work;
         work = new T[lwork];
 
-        LapackConnector::xhegvx(1,
-                                'V',
-                                'I',
-                                'U',
-                                nbase,
-                                hcc,
-                                ldh,
-                                scc,
-                                ldh,
-                                0.0,
-                                0.0,
-                                1,
-                                m,
-                                0.0,
-                                mm,
-                                eigenvalue,
-                                vcc,
-                                ldh,
-                                work,
-                                lwork,
-                                rwork,
-                                iwork,
-                                ifail,
-                                info);
+        LapackCon::xhegvx(1,
+                          'V',
+                          'I',
+                          'U',
+                          nbase,
+                          hcc,
+                          ldh,
+                          scc,
+                          ldh,
+                          0.0,
+                          0.0,
+                          1,
+                          m,
+                          0.0,
+                          mm,
+                          eigenvalue,
+                          vcc,
+                          ldh,
+                          work,
+                          lwork,
+                          rwork,
+                          iwork,
+                          ifail,
+                          info);
 
         delete[] work;
         delete[] rwork;

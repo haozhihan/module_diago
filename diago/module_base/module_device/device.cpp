@@ -1,7 +1,7 @@
 
 #include "device.h"
 
-#include "../../module_base/tool_quit.h"
+// #include "../../module_base/tool_quit.h"
 
 #include "../macros.h"
 #include <cstring>
@@ -147,14 +147,14 @@ int set_device_by_rank(const MPI_Comm mpi_comm)
     cudaGetDeviceCount(&device_num);
     if (device_num <= 0)
     {
-        ModuleBase::WARNING_QUIT("device", "can not find gpu device!");
+        // ModuleBase::WARNING_QUIT("device", "can not find gpu device!");
     }
     // warning: this is not a good way to assign devices, user should assign One process per GPU
     int local_device_id = localMpiRank % device_num;
     int ret = cudaSetDevice(local_device_id);
     if (ret != cudaSuccess)
     {
-        ModuleBase::WARNING_QUIT("device", "cudaSetDevice failed!");
+        // ModuleBase::WARNING_QUIT("device", "cudaSetDevice failed!");
     }
     return local_device_id;
 }
@@ -183,25 +183,25 @@ std::string get_device_flag(const std::string& device,
         if (device_num <= 0)
         {
             std::string msg = "Cannot find GPU on this computer!";
-            ModuleBase::WARNING_QUIT("device", msg);
+            // ModuleBase::WARNING_QUIT("device", msg);
             return "unknown";
         }
 #else
         std::string msg = "The GPU is not supported in this build!";
-        ModuleBase::WARNING_QUIT("device", msg);
+        // ModuleBase::WARNING_QUIT("device", msg);
         return "unknown";
 #endif
         if (basis_type == "lcao_in_pw")
         {
             std::string msg = "The GPU currently does not support the basis type \"lcao_in_pw\"!";
-            ModuleBase::WARNING_QUIT("device", msg);
+            // ModuleBase::WARNING_QUIT("device", msg);
             return "unknown";
         }
         else if (basis_type == "lcao" && gamma_only == false)
         {
             std::string msg
                 = "The GPU currently does not support the basis type \"lcao\" with \"gamma_only\" set to \"0\"!";
-            ModuleBase::WARNING_QUIT("device", msg);
+            // ModuleBase::WARNING_QUIT("device", msg);
             return "unknow";
         }
         else
@@ -212,7 +212,7 @@ std::string get_device_flag(const std::string& device,
     else
     {
         std::string msg = "INPUT device can only be set to \"cpu\" or \"gpu\"!";
-        ModuleBase::WARNING_QUIT("device", msg);
+        // ModuleBase::WARNING_QUIT("device", msg);
         return "unknown";
     }
 }
@@ -224,7 +224,7 @@ int get_device_kpar(const int& kpar)
     MPI_Comm_size(MPI_COMM_WORLD, &temp_nproc);
     if (temp_nproc != kpar)
     {
-        ModuleBase::WARNING("Input_conv", "None kpar set in INPUT file, auto set kpar value.");
+        // ModuleBase::WARNING("Input_conv", "None kpar set in INPUT file, auto set kpar value.");
     }
     // GlobalV::KPAR = temp_nproc;
     // band the CPU processor to the devices
@@ -308,7 +308,7 @@ void print_device_info<base_device::DEVICE_GPU>(const base_device::DEVICE_GPU* c
     {
         ofs_device << "cudaGetDeviceCount returned " << static_cast<int>(error_id) << "\n-> "
                    << cudaGetErrorString(error_id) << std::endl;
-        ModuleBase::WARNING_QUIT("device", "GPU returned is without cudaSuccess");
+        // ModuleBase::WARNING_QUIT("device", "GPU returned is without cudaSuccess");
     }
     // This function call returns 0 if there are no CUDA capable devices.
     if (deviceCount == 0)
@@ -558,7 +558,7 @@ void print_device_info<base_device::DEVICE_GPU>(const base_device::DEVICE_GPU* c
     {
         ofs_device << "hipGetDeviceCount returned " << static_cast<int>(error_id) << "\n-> "
                    << hipGetErrorString(error_id) << std::endl;
-        ModuleBase::WARNING_QUIT("device", "GPU returned is without hipSuccess");
+        // ModuleBase::WARNING_QUIT("device", "GPU returned is without hipSuccess");
     }
     // This function call returns 0 if there are no CUDA capable devices.
     if (deviceCount == 0)
