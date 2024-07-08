@@ -1,4 +1,5 @@
 #include "diago/diago_dav_subspace.h"
+#include <complex>
 // #include "module_hsolver/diago_iter_assist.h"
 
 
@@ -15,9 +16,9 @@ int main(int argc, char** argv)
     const int nbasis = 10;
     const int nband = 10;
 
-    std::vector<double> pre_condition(nbasis, 1.0);
+    std::vector<std::complex<double>> pre_condition(nbasis, {1.0, 0.0});
 
-    hsolver::Diago_DavSubspace<double, base_device::DEVICE_CPU> dav_subspace(
+    hsolver::Diago_DavSubspace<std::complex<double>, base_device::DEVICE_CPU> dav_subspace(
                 pre_condition,
                 nband,
                 nbasis,
