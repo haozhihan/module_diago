@@ -1,4 +1,4 @@
-#include "module_hsolver/kernels/math_kernel_op.h"
+#include "./math_kernel_op.h"
 
 #include <iomanip>
 #include <iostream>
@@ -360,7 +360,7 @@ template struct matrixSetToAnother<std::complex<double>, base_device::DEVICE_CPU
 template struct calc_grad_with_block_op<std::complex<double>, base_device::DEVICE_CPU>;
 template struct line_minimize_with_block_op<std::complex<double>, base_device::DEVICE_CPU>;
 
-#ifdef __LCAO
+// #ifdef __LCAO
 template struct axpy_op<double, base_device::DEVICE_CPU>;
 template struct gemv_op<double, base_device::DEVICE_CPU>;
 template struct gemm_op<double, base_device::DEVICE_CPU>;
@@ -371,5 +371,5 @@ template struct vector_div_vector_op<double, base_device::DEVICE_CPU>;
 template struct matrixTranspose_op<double, base_device::DEVICE_CPU>;
 template struct matrixSetToAnother<double, base_device::DEVICE_CPU>;
 template struct constantvector_addORsub_constantVector_op<double, base_device::DEVICE_CPU>;
-#endif
+// #endif
 } // namespace hsolver

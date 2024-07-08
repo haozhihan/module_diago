@@ -204,4 +204,11 @@ CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/11/bits/algorithmfwd.h \
  /usr/include/c++/11/bits/stl_heap.h \
  /usr/include/c++/11/bits/stl_tempbuf.h \
- /usr/include/c++/11/bits/uniform_int_dist.h
+ /usr/include/c++/11/bits/uniform_int_dist.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/math_kernel_op.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/../../module_base/macros.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/../../module_base/blas_connector.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/../../module_base/parallel_reduce.h \
+ /usr/include/c++/11/cassert /usr/include/assert.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/../../module_base/module_device/types.h \
+ /home/haozhihan/11-test/module_diago/diago/module_hsolver/kernels/../../module_base/module_device/memory_op.h

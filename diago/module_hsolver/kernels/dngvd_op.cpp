@@ -1,4 +1,4 @@
-#include "module_hsolver/kernels/dngvd_op.h"
+#include "./dngvd_op.h"
 
 #include <algorithm>
 #include <fstream>
@@ -333,10 +333,10 @@ template struct dngvx_op<std::complex<double>, base_device::DEVICE_CPU>;
 
 template struct dngv_op<std::complex<float>, base_device::DEVICE_CPU>;
 template struct dngv_op<std::complex<double>, base_device::DEVICE_CPU>;
-#ifdef __LCAO
+// #ifdef __LCAO
 template struct dngvd_op<double, base_device::DEVICE_CPU>;
 template struct dnevx_op<double, base_device::DEVICE_CPU>;
 template struct dngvx_op<double, base_device::DEVICE_CPU>;
 template struct dngv_op<double, base_device::DEVICE_CPU>;
-#endif
+// #endif
 } // namespace hsolver
