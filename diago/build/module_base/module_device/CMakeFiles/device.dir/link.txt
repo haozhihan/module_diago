@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdevice.a CMakeFiles/device.dir/device.cpp.o CMakeFiles/device.dir/memory_op.cpp.o
+/usr/bin/ranlib libdevice.a
