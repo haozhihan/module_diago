@@ -43,6 +43,8 @@ class Diago_DavSubspace : public DiagH<T, Device>
              const std::vector<bool>& is_occupied,
              const bool& scf_type);
 
+    int get_nbase_x() const { return nbase_x; }
+
   private:
     /// for MPI communication
     const diag_comm_info diag_comm;
