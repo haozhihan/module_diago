@@ -25,13 +25,13 @@ int main(int argc, char **argv) {
               // base_device::DEVICE_CPU>::PW_DIAG_NMAX,
         false, comm_info);
 
-    std::vector<std::complex<double>> h_mat(25 * 25, std::complex<double>(0.0, 0.0));
 
+    // 构造 H 矩阵
+    std::vector<std::complex<double>> h_mat(25 * 25, std::complex<double>(0.0, 0.0));
     // 填充对角线元素
     for (int i = 0; i < 25; ++i) {
         h_mat[i * 25 + i] = std::complex<double>(1.0, 1.0); // 一个示例值
     }
-
     // 填充上三角部分
     for (int i = 1; i < 25; ++i) {
         for (int j = 0; j < i; ++j) {
@@ -44,12 +44,11 @@ int main(int argc, char **argv) {
         }
     }
 
-    auto hpsi_func = [h_mat](std::complex<double> *hpsi_out, std::complex<double> *psi_in,
-                             const int nband_in, const int nbasis_in,
-                             const int band_index1, const int band_index2) {
-        const int row = nbasis_in;
-        const int col = nbasis_in;
-
+    auto hpsi_func = [h_mat](std::complex<double> *hpsi_out,
+                             std::complex<double> *psi_in, const int nband_in,
+                             const int nbasis_in, const int band_index1,
+                             const int band_index2) {
+        
         const std::complex<double> *one_ = nullptr, *zero_ = nullptr;
         one_ = new std::complex<double>(1.0, 0.0);
         zero_ = new std::complex<double>(0.0, 0.0);
@@ -57,16 +56,15 @@ int main(int argc, char **argv) {
         base_device::DEVICE_CPU *ctx = {};
 
         hsolver::gemm_op<std::complex<double>, base_device::DEVICE_CPU>()(
-            ctx, 'N', 'N', row, band_index2 - band_index1 + 1, nbasis_in, one_,
+            ctx, 'N', 'N', nbasis_in, band_index2 - band_index1 + 1, nbasis_in, one_,
             h_mat.data(),
             nbasis_in, psi_in + band_index1 * nbasis_in, nbasis_in,
             zero_, hpsi_out + band_index1 * nbasis_in, nbasis_in);
     };
 
     std::vector<std::complex<double>> psi(nbasis * nband, 1.0);
-
+    
     std::vector<double> eigenvalue(nband, 1.0);
-
     std::vector<bool> is_occupied(nband, true);
 
     int res = dav_subspace.diag(hpsi_func, nullptr, psi.data(), nbasis,
