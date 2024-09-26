@@ -1,4 +1,4 @@
-name: "pip build and test"
+name: "pip build and run unit test"
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Build with Pip
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
@@ -18,9 +18,13 @@ jobs:
         python-version: ["3.7", "3.11", "pypy-3.8"]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true  
 
-    - uses: actions/setup-python@v4
+    - name : Set up Python
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
