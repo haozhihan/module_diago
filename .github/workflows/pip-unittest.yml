@@ -27,6 +27,22 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Install dependencies on Ubuntu
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libopenblas-dev liblapack-dev
+  
+    - name: Install dependencies on macOS
+      if: matrix.platform == 'macos-latest'
+      run: |
+        brew install openblas lapack
+
+    - name: Install dependencies on Windows
+      if: matrix.platform == 'windows-latest'
+      run: |
+        choco install openblas lapack
+
     - name: Build
       run: pip install --verbose .[test]
 
