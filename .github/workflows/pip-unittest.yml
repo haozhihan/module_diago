@@ -1,0 +1,55 @@
+name: "pip build and run unit test"
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  Build-and-test:
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: ["3.8", "3.11"]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true  
+
+    - name : Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies on Ubuntu
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libopenblas-dev liblapack-dev
+  
+    - name: Install dependencies on macOS
+      if: matrix.platform == 'macos-latest'
+      run: |
+        brew install openblas lapack
+
+    - name: Install vcpkg to install dependencies on Windows
+      if: matrix.platform == 'windows-latest'
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg.exe install openblas lapack
+
+    - name: Build
+      run: pip install --verbose .[test]
+
+    - name: Test
+      run: |
+        cd tests
+        pytest
+
