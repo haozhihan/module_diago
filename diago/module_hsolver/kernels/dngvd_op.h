@@ -5,7 +5,7 @@
 
 #include "math_kernel_op.h"
 // #include "module_base/lapack_connector.h"
-#include "module_base/lapack_con.h"
+#include "../../module_base/lapack_con.h"
 
 namespace hsolver
 {
