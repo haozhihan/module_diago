@@ -1,0 +1,2 @@
+add_subdirectory(diago)
+add_subdirectory(pybind11)
