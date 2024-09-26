@@ -15,3 +15,14 @@ git submodule update --init --recursive
 cd module_diago
 ```
 - Build pyabacus by `pip install -v .` or install test dependencies & build  pyabacus by `pip install .[test]`. (Use `pip install -v .[test] -i https://pypi.tuna.tsinghua.edu.cn/simple` to accelerate installation process.)
+
+# Test
+
+This project is tested by pytest. Run `pytest -v` in the `tests` directory to test the project.
+
+```shell
+cd tests
+pytest -v
+```
+
+# Usage
