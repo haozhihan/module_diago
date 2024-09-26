@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
             ctx, 'N', 'N', nbasis_in, band_index2 - band_index1 + 1, nbasis_in, one_,
             h_mat.data(),
             nbasis_in, psi_in + band_index1 * nbasis_in, nbasis_in,
-            zero_, hpsi_out + band_index1 * nbasis_in, nbasis_in);
+            zero_, hpsi_out, nbasis_in);
     };
 
     std::vector<std::complex<double>> psi(nbasis * nband, 1.0);

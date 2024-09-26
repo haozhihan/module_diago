@@ -65,19 +65,19 @@ Diago_DavSubspace<T, Device>::Diago_DavSubspace(const std::vector<Real>& precond
 template <typename T, typename Device>
 Diago_DavSubspace<T, Device>::~Diago_DavSubspace()
 {
-    // delmem_complex_op()(this->ctx, this->psi_in_iter);
+    delmem_complex_op()(this->ctx, this->psi_in_iter);
 
-    // delmem_complex_op()(this->ctx, this->hphi);
-    // delmem_complex_op()(this->ctx, this->hcc);
-    // delmem_complex_op()(this->ctx, this->scc);
-    // delmem_complex_op()(this->ctx, this->vcc);
+    delmem_complex_op()(this->ctx, this->hphi);
+    delmem_complex_op()(this->ctx, this->hcc);
+    delmem_complex_op()(this->ctx, this->scc);
+    delmem_complex_op()(this->ctx, this->vcc);
 
-// #if defined(__CUDA) || defined(__ROCM)
-//     if (this->device == base_device::GpuDevice)
-//     {
-//         delmem_real_op()(this->ctx, this->d_precondition);
-//     }
-// #endif
+#if defined(__CUDA) || defined(__ROCM)
+    if (this->device == base_device::GpuDevice)
+    {
+        delmem_real_op()(this->ctx, this->d_precondition);
+    }
+#endif
 }
 
 template <typename T, typename Device>

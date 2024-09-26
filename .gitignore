@@ -102,3 +102,5 @@ build/diago/module_hsolver/cmake_install.cmake
 build/diago/module_hsolver/Makefile
 build/diago/module_hsolver/CMakeFiles/CMakeDirectoryInformation.cmake
 build/diago/module_hsolver/CMakeFiles/progress.marks
+
+build/
