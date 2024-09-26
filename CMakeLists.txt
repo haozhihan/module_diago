@@ -34,7 +34,7 @@ target_link_libraries(
 
 target_compile_definitions(_py_dav PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-set(TARGET_PACK py_davsubspace)
+set(TARGET_PACK module_diago)
 set(CMAKE_INSTALL_RPATH "${PYTHON_SITE_PACKAGES}/${TARGET_PACK}")
 set_target_properties(_py_dav PROPERTIES INSTALL_RPATH "$ORIGIN")
 set_target_properties(device PROPERTIES INSTALL_RPATH "$ORIGIN")

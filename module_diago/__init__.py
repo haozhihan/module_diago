@@ -6,5 +6,5 @@ __all__ = list(__submodules__)
 
 def __getattr__(attr):
     if attr == "hsolver":
-        import py_davsubspace.hsolver as hsolver
+        import module_diago.hsolver as hsolver
         return hsolver

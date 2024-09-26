@@ -1,4 +1,4 @@
-from py_davsubspace import hsolver
+from module_diago import hsolver
 import numpy as np
 import scipy
 

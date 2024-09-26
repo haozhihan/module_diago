@@ -8,8 +8,7 @@ on:
       - '*'
 
 jobs:
-  build:
-    name: Build with Pip
+  Build-and-test:
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
@@ -28,7 +27,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Build and install
+    - name: Build
       run: pip install --verbose .[test]
 
     - name: Test
