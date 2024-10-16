@@ -51,5 +51,5 @@ jobs:
     - name: Test
       run: |
         cd tests
-        pytest
+        pytest -v
 
