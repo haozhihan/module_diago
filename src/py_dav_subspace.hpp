@@ -110,7 +110,9 @@ public:
         bool scf_type,
         hsolver::diag_comm_info comm_info
     ) {
-        auto hpsi_func = [mm_op] (
+        py::capsule buffer_handle([](){});
+
+        auto hpsi_func = [mm_op, buffer_handle] (
             std::complex<double> *hpsi_out,
             std::complex<double> *psi_in, 
             const int nband_in,
@@ -120,15 +122,26 @@ public:
         ) {
             // Note: numpy's py::array_t is row-major, but
             //       our raw pointer-array is column-major
-            py::array_t<std::complex<double>, py::array::f_style> psi({nbasis_in, band_index2 - band_index1 + 1});
-            py::buffer_info psi_buf = psi.request();
-            std::complex<double>* psi_ptr = static_cast<std::complex<double>*>(psi_buf.ptr);
-            std::copy(psi_in + band_index1 * nbasis_in, psi_in + (band_index2 + 1) * nbasis_in, psi_ptr);
+            // py::array_t<std::complex<double>, py::array::f_style> psi({nbasis_in, band_index2 - band_index1 + 1});
+            // py::buffer_info psi_buf = psi.request();
+            // std::complex<double>* psi_ptr = static_cast<std::complex<double>*>(psi_buf.ptr);
+            // std::copy(psi_in + band_index1 * nbasis_in, psi_in + (band_index2 + 1) * nbasis_in, psi_ptr);
+
+            // py::array_t<std::complex<double>, py::array::f_style> hpsi = mm_op(psi);
+
+            // py::buffer_info hpsi_buf = hpsi.request();
+            // std::complex<double>* hpsi_ptr = static_cast<std::complex<double>*>(hpsi_buf.ptr);
+            // std::copy(hpsi_ptr, hpsi_ptr + (band_index2 - band_index1 + 1) * nbasis_in, hpsi_out);
+
+            py::array_t<std::complex<double>, py::array::f_style> psi(
+                {nbasis_in, band_index2 - band_index1 + 1},
+                psi_in + band_index1 * nbasis_in,
+                buffer_handle
+            );
 
             py::array_t<std::complex<double>, py::array::f_style> hpsi = mm_op(psi);
 
-            py::buffer_info hpsi_buf = hpsi.request();
-            std::complex<double>* hpsi_ptr = static_cast<std::complex<double>*>(hpsi_buf.ptr);
+            std::complex<double>* hpsi_ptr = static_cast<std::complex<double>*>(hpsi.mutable_data());
             std::copy(hpsi_ptr, hpsi_ptr + (band_index2 - band_index1 + 1) * nbasis_in, hpsi_out);
         };
 
