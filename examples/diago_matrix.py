@@ -1,3 +1,5 @@
+import scipy.sparse
+import scipy.sparse.linalg
 from module_diago import hsolver
 import numpy as np
 import scipy
@@ -5,9 +7,9 @@ import scipy
 import time
 
 def load_mat(mat_file):
-    h_mat = scipy.io.loadmat(mat_file)['Problem']['A'][0, 0]
+    h_mat = scipy.io.mmread(mat_file)
     nbasis = h_mat.shape[0]
-    nband = 8
+    nband = 4
     
     return h_mat, nbasis, nband
 
@@ -19,6 +21,7 @@ def calc_eig_pyabacus(mat_file, method):
     
     h_mat, nbasis, nband = load_mat(mat_file)
     
+    print('============')
     print(f"nbasis: {nbasis}, nband: {nband}")
     
     v0 = np.random.rand(nbasis, nband)
@@ -29,7 +32,7 @@ def calc_eig_pyabacus(mat_file, method):
     def mm_op(x):
         return h_mat.dot(x)
     
-    start_time = time.time()
+    # start_time = time.time()
     e, _ = algo[method](
         mm_op,
         v0,
@@ -37,38 +40,35 @@ def calc_eig_pyabacus(mat_file, method):
         nband,
         precond,
         dav_ndim=8,
-        tol=1e-8,
+        tol=1e-10,
         max_iter=1000
     )
-    end_time = time.time()
+    # end_time = time.time()
 
     print(f'eigenvalues calculated by pyabacus-{method} is: \n', e)
-    print(f'time: {end_time - start_time} s')
+    # print(f'time: {end_time - start_time} s')
+    # print('============')
     
     return e
 
 def calc_eig_scipy(mat_file):
     h_mat, _, nband = load_mat(mat_file)
-    
-    start_time = time.time()
     e, _ = scipy.sparse.linalg.eigsh(h_mat, k=nband, which='SA', maxiter=1000)
     e = np.sort(e)
-    end_time = time.time()
-    
     print('eigenvalues calculated by scipy is: \n', e)
-    print(f'time: {end_time - start_time} s')
     
     return e
 
 if __name__ == '__main__':
-    mat_file = './Si2.mat'
-    method = ['dav_subspace']
+    mat_files = ['./Si2.mtx', './SiH4.mtx', './Si10H16.mtx']
+    methods = ['dav_subspace']
     
-    for m in method:
-        print(f'\n====== Calculating eigenvalues using {m} method... ======')
-        e_pyabacus = calc_eig_pyabacus(mat_file, m)
-        e_scipy = calc_eig_scipy(mat_file)
+    for m in mat_files:
+        print(f'\n====== Calculating eigenvalues... ======')
+        print(f'file: {m}')
+        e_pyabacus = calc_eig_pyabacus(m, 'dav_subspace')
+        e_scipy = calc_eig_scipy(m)
+        print('pyabacus - scipy: \n', e_pyabacus - e_scipy)
         
-        print('eigenvalues difference: \n', e_pyabacus - e_scipy)
     
     
