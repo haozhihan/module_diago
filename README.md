@@ -6,13 +6,17 @@
 
 - Create and activate a new conda env
 ```shell
-conda create -n myenv python=3.8 & conda activate myenv
+conda create -n diag_env python=3.8
+conda activate diag_env
+conda install numpy
+conda install scipy
+conda install pytest
 ```
 - Clone this repository
 ```shell
 git clone https://github.com/haozhihan/module_diago.git
-git submodule update --init --recursive
 cd module_diago
+git submodule update --init --recursive
 ```
 - Build pyabacus by `pip install -v .` or install test dependencies & build  pyabacus by `pip install .[test]`. (Use `pip install -v .[test] -i https://pypi.tuna.tsinghua.edu.cn/simple` to accelerate installation process.)
 
