@@ -51,7 +51,7 @@ Diago_DavSubspace<T, Device>::Diago_DavSubspace(const std::vector<Real>& precond
     setmem_complex_op()(this->ctx, this->vcc, 0, this->nbase_x * this->nbase_x);
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    std::cout << "malloc memory" << std::endl;
+    // std::cout << "malloc memory" << std::endl;
 
 // #if defined(__CUDA) || defined(__ROCM)
 //     if (this->device == base_device::GpuDevice)
@@ -198,7 +198,7 @@ int Diago_DavSubspace<T, Device>::diag_once(const HPsiFunc& hpsi_func,
         if ((this->notconv == 0) || (nbase + this->notconv + 1 > this->nbase_x) || (dav_iter == this->iter_nmax))
         {
             // ModuleBase::timer::tick("Diago_DavSubspace", "last");
-            std::cout << "2" << std::endl;
+            // std::cout << "2" << std::endl;
 
             // updata eigenvectors of Hamiltonian
             setmem_complex_op()(this->ctx, psi_in, 0, n_band * psi_in_dmax);
@@ -242,7 +242,7 @@ int Diago_DavSubspace<T, Device>::diag_once(const HPsiFunc& hpsi_func,
                                          this->dim);
                 }
 
-                std::cout << "2" << std::endl;
+                // std::cout << "2" << std::endl;
 
                 
 
@@ -755,7 +755,7 @@ int Diago_DavSubspace<T, Device>::diag(const HPsiFunc& hpsi_func,
         //     this->n_band, psi_in_dmax);
         // }
 
-        std::cout << "1" << std::endl;
+        // std::cout << "1" << std::endl;
 
         sum_iter += this->diag_once(hpsi_func, psi_in, psi_in_dmax, eigenvalue_in_hsolver, is_occupied);
 
